@@ -1,20 +1,23 @@
 #include <iostream>
 #include <string>
-
-
-using namespace std;
+#include "FBullCowGame.h"
 
 void PrintIntro();
 void PlayGame();
-string GetGuess();
-bool	AskToPlayAgain();
+std::string GetGuess();
+bool PlayAgain();
+
+//Instantiate
+FBullCowGame BCGame;
 
 //Entry point for application
 int main() {
 	
-	PrintIntro();	
-	PlayGame();
-	AskToPlayAgain();
+	do {
+		PrintIntro();
+		PlayGame();
+	} while (PlayAgain());
+	
 	//Exit the application
 	return 0;
 }
@@ -22,35 +25,50 @@ int main() {
 void PrintIntro() {
 	//Introduce the game
 	constexpr int WORD_LENGTH = 5;
-	cout << "Welcome to bulls and cows, a fun word game\n";
-	cout << "Can you guess the " << WORD_LENGTH;
-	cout << " letter isogram I'm thinking of?\n";
-	cout << endl;
+	std::cout << "Welcome to bulls and cows, a fun word game\n";
+	std::cout << "Can you guess the " << WORD_LENGTH;
+	std::cout << " letter isogram I'm thinking of?\n";
+	std::cout << std::endl;
 	return;
 }
 
-void PlayGame()
-{
+void PlayGame() {
+
+	int MaxTries = BCGame.GetMaxTries();
 	//Loop for the number of turns asking for guesses
 	constexpr int LIMIT = 5;
+
+	//TODO change from FOR to WHILE loop once we are validating tries
 	for (int count = 1; count <= LIMIT; count++) {
-		string Guess = GetGuess();
-		cout << "Your guess was " << Guess << endl;
-		cout << endl;
+		std::string Guess = GetGuess(); //TODO make loop checking valid
+
+		// Submit valid guess to the game
+		// Print number of bulls and cows
+		std::cout << "Your guess was " << Guess << std::endl;
+		std::cout << std::endl;
 	}
+	//TODO summarise game
 }
 
-string GetGuess() {
+std::string GetGuess() {
+
+	int CurrentTry = BCGame.GetCurrentTry();
+
 	//Get guess from the user
-	cout << "Enter your guess: ";
-	string Guess = "";
-	getline(cin, Guess);
+	std::cout << "Try " << CurrentTry << ". Enter your guess: ";
+	std::string Guess = "";
+	std::getline(std::cin, Guess);
 	return Guess;
 }
 
-bool AskToPlayAgain()  {
-	cout << "Do you want to play again?";
-	string Response = "";
-	getline(cin, Response);
+bool PlayAgain()  {
+
+	BCGame.Reset();
+
+	std::cout << "Do you want to play again?";
+	std::string Response = "";
+	std::getline(std::cin, Response);
 	return (Response[0] == 'y') || (Response[0] == 'Y');
+
+
 }
