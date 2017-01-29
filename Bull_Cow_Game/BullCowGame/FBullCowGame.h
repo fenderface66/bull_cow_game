@@ -4,12 +4,14 @@
 using FString = std::string;
 using int32 = int;
 
-struct FBullCowCount {
+struct FBullCowCount 
+{
 	int32 Bulls = 0;
 	int32 Cows = 0;
 };
 
-enum class EGuessStatus {
+enum class EGuessStatus 
+{
 	Invalid_Status,
 	OK,
 	Not_Isogram,
@@ -17,7 +19,8 @@ enum class EGuessStatus {
 	Not_Lowercase
 };
 
-class FBullCowGame {
+class FBullCowGame 
+{
 public:
 
 	FBullCowGame(); // Constructor
@@ -31,10 +34,13 @@ public:
 	void Reset(); //TODO make a more rich return value
 	
 
-	FBullCowCount SubmitGuess(FString);
+	FBullCowCount SubmitValidGuess(FString);
 
 private:
+	bool isIsogram(FString) const;
 	int32 MyCurrentTry;
 	int32 MyMaxTries;
 	FString  MyHiddenWord;
+	bool bGameWon;
+	bool IsLowerCase(FString) const;
 };
